@@ -170,12 +170,30 @@ tension: 0.3
 
 options: {
 
-responsive:true,
+responsive: true,
 
 plugins:{
 legend:{
 position:"top"
 }
+},
+
+scales: {
+
+x: {
+title: {
+display: true,
+text: "Meses de inversión"
+}
+},
+
+y: {
+title: {
+display: true,
+text: "Capital acumulado (CLP)"
+}
+}
+
 }
 
 }
