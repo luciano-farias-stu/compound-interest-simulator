@@ -24,10 +24,19 @@ let marketCapital = 0;
 
 let bankRate = bank / 100 / 12;
 let marketRate = market / 100 / 12;
-  
+let volatilidad = 0.02; // 2%
+
+let marketUpperRate = (market/100 + volatilidad) / 12;
+let marketLowerRate = (market/100 - volatilidad) / 12;
+
+let marketUpperCapital = 0;
+let marketLowerCapital = 0;
+
 let ahorroData = [];
 let bankData = [];
 let marketData = [];
+let marketUpper = [];
+let marketLower = [];
 
 for(let i=0; i<months; i++){
 
@@ -36,6 +45,15 @@ bankCapital = bankCapital + Number(aporte);
 
 marketCapital = marketCapital * (1 + marketRate);
 marketCapital = marketCapital + Number(aporte);
+
+marketUpperCapital = marketUpperCapital * (1 + marketUpperRate);
+marketUpperCapital = marketUpperCapital + aporte;
+
+marketLowerCapital = marketLowerCapital * (1 + marketLowerRate);
+marketLowerCapital = marketLowerCapital + aporte;
+
+marketUpper.push(marketUpperCapital);
+marketLower.push(marketLowerCapital);
 
 ahorroData.push(aporte * (i+1));
 bankData.push(bankCapital);
@@ -110,6 +128,24 @@ data: marketData,
 borderColor: "#22c55e",
 backgroundColor: "#22c55e20",
 borderWidth: 3,
+tension: 0.3
+},
+
+{
+label: "Mercado escenario alto",
+data: marketUpper,
+borderColor: "#22c55e66",
+borderWidth: 2,
+borderDash: [6,6],
+tension: 0.3,
+fill: "-1"
+},
+
+{
+label: "Mercado escenario bajo",
+data: marketLower,
+borderColor: "#22c55e55",
+borderWidth: 1,
 tension: 0.3
 }
 
