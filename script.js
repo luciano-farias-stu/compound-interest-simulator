@@ -91,17 +91,17 @@ return;
 }
   
 ahorroCard.innerHTML =
-`<h3>Ahorro simple</h3>
-<p>Total: ${formatoCLP(aporteTotal)}</p>`;
+`<h3>💰 Ahorro simple</h3>
+<p>Total: <strong>${formatoCLP(aporteTotal)}</strong></p>`;
 
 bancoCard.innerHTML =
-`<h3>Banco</h3>
-<p>Total: ${formatoCLP(bankCapital)}</p>
+`<h3>🏦 Banco</h3>
+<p>Total: <strong>${formatoCLP(bankCapital)}</strong></p>
 <p>Interés ganado: ${formatoCLP(gananciaBanco)}</p>`;
 
 mercadoCard.innerHTML =
-`<h3>Mercado</h3>
-<p>Total: ${formatoCLP(marketCapital)}</p>
+`<h3>📈 Mercado</h3>
+<p>Total: <strong>${formatoCLP(marketCapital)}</strong></p>
 <p>Interés ganado: ${formatoCLP(gananciaMercado)}</p>`;
   
 let ctx = document.getElementById("grafico").getContext("2d");
@@ -153,7 +153,10 @@ borderColor: "#22c55e66",
 borderWidth: 2,
 borderDash: [6,6],
 tension: 0.3,
-fill: "-1"
+fill: {
+target: 4,
+above: "rgba(34,197,94,0.15)"
+}
 },
 
 {
@@ -172,10 +175,30 @@ options: {
 
 responsive: true,
 
+interaction:{
+mode: "index",
+intersect: false
+},
+
 plugins:{
+
 legend:{
-position:"top"
+position:"top",
+labels:{
+font:{
+size:14
 }
+}
+},
+
+tooltip:{
+callbacks:{
+label:function(context){
+return context.dataset.label + ": " + formatoCLP(context.raw);
+}
+}
+}
+
 },
 
 scales: {
@@ -184,13 +207,26 @@ x: {
 title: {
 display: true,
 text: "Meses de inversión"
+},
+grid:{
+display:false
 }
 },
 
 y: {
 title: {
 display: true,
-text: "Capital acumulado (CLP)"
+text: "Capital acumulado"
+},
+
+ticks:{
+callback: function(value){
+return formatoCLP(value);
+  
+animation:{
+duration:2000,
+easing:"easeOutQuart"
+}
 }
 }
 
@@ -198,6 +234,7 @@ text: "Capital acumulado (CLP)"
 
 }
 
+}
 });
 
 }
