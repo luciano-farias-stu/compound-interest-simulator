@@ -225,11 +225,11 @@ callback: function(value){
 return formatoCLP(value);
 }
 }
-}
 
 }
 
 }
 
 }
+
 });
