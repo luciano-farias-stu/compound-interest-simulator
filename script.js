@@ -1,3 +1,13 @@
+function formatoCLP(valor){
+
+return new Intl.NumberFormat('es-CL', {
+style: 'currency',
+currency: 'CLP',
+minimumFractionDigits: 0
+}).format(valor);
+
+}
+
 function simular(){
 
 let aporte = document.getElementById("monthly").value;
