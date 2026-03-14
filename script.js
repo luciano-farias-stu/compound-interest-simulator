@@ -42,16 +42,25 @@ bankData.push(bankCapital);
 marketData.push(marketCapital);
 
 }
+  
+let ahorroCard = document.getElementById("ahorroCard");
+let bancoCard = document.getElementById("bancoCard");
+let mercadoCard = document.getElementById("mercadoCard");
 
-document.getElementById("ahorroCard").innerHTML =
+if(!ahorroCard || !bancoCard || !mercadoCard){
+console.error("No se encontraron las tarjetas en el HTML");
+return;
+}
+  
+ahorroCard.innerHTML =
 `<h3>Ahorro</h3>${formatoCLP(ahorro)}`;
 
-document.getElementById("bancoCard").innerHTML =
+bancoCard.innerHTML =
 `<h3>Banco</h3>${formatoCLP(bankCapital)}`;
 
-document.getElementById("mercadoCard").innerHTML =
+mercadoCard.innerHTML =
 `<h3>Mercado</h3>${formatoCLP(marketCapital)}`;
-
+  
 let ctx = document.getElementById("grafico").getContext("2d");
 
 new Chart(ctx, {
