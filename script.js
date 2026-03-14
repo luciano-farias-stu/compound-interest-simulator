@@ -152,11 +152,7 @@ data: marketUpper,
 borderColor: "#22c55e66",
 borderWidth: 2,
 borderDash: [6,6],
-tension: 0.3,
-fill: {
-target: 4,
-above: "rgba(34,197,94,0.15)"
-}
+tension: 0.3
 },
 {
 label: "Mercado escenario bajo",
