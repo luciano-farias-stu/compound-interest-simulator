@@ -23,7 +23,9 @@ minimumFractionDigits: 0
 
 function simular(){
 
-let aporte = Number(document.getElementById("monthly").value);
+let aporte = Number(
+document.getElementById("monthly").value.replace(/\./g,"")
+);
 let years = Number(document.getElementById("years").value);
 let bank = Number(document.getElementById("bank").value);
 let market = Number(document.getElementById("market").value);
