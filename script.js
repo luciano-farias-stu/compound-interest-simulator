@@ -1,3 +1,16 @@
+function formatearInputCLP(input){
+
+let valor = input.value.replace(/\./g,"").replace(/\D/g,"");
+
+if(valor === ""){
+input.value = "";
+return;
+}
+
+input.value = Number(valor).toLocaleString("es-CL");
+
+}
+
 function formatoCLP(valor){
 
 return new Intl.NumberFormat('es-CL', {
