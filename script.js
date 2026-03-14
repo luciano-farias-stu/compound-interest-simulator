@@ -42,7 +42,12 @@ bankData.push(bankCapital);
 marketData.push(marketCapital);
 
 }
-  
+
+let aporteTotal = aporte * months;
+
+let gananciaBanco = bankCapital - aporteTotal;
+let gananciaMercado = marketCapital - aporteTotal;
+
 let ahorroCard = document.getElementById("ahorroCard");
 let bancoCard = document.getElementById("bancoCard");
 let mercadoCard = document.getElementById("mercadoCard");
@@ -53,17 +58,22 @@ return;
 }
   
 ahorroCard.innerHTML =
-`<h3>Ahorro</h3>${formatoCLP(ahorro)}`;
+`<h3>Ahorro simple</h3>
+<p>Total: ${formatoCLP(aporteTotal)}</p>`;
 
 bancoCard.innerHTML =
-`<h3>Banco</h3>${formatoCLP(bankCapital)}`;
+`<h3>Banco</h3>
+<p>Total: ${formatoCLP(bankCapital)}</p>
+<p>Interés ganado: ${formatoCLP(gananciaBanco)}</p>`;
 
 mercadoCard.innerHTML =
-`<h3>Mercado</h3>${formatoCLP(marketCapital)}`;
+`<h3>Mercado</h3>
+<p>Total: ${formatoCLP(marketCapital)}</p>
+<p>Interés ganado: ${formatoCLP(gananciaMercado)}</p>`;
   
 let ctx = document.getElementById("grafico").getContext("2d");
 
-new Chart(ctx, {
+window.miGrafico = new Chart(ctx, {
 
 type: "line",
 
@@ -75,22 +85,47 @@ datasets: [
 
 {
 label: "Ahorro sin interés",
-data: ahorroData
+data: ahorroData,
+borderColor: "#ef4444",
+backgroundColor: "#ef444420",
+borderWidth: 3,
+tension: 0.3
 },
 
 {
 label: "Banco",
-data: bankData
+data: bankData,
+borderColor: "#3b82f6",
+backgroundColor: "#3b82f620",
+borderWidth: 3,
+tension: 0.3
 },
 
 {
 label: "Mercado",
-data: marketData
+data: marketData,
+borderColor: "#22c55e",
+backgroundColor: "#22c55e20",
+borderWidth: 3,
+tension: 0.3
 }
 
 ]
 
+},
+
+options: {
+
+responsive:true,
+
+plugins:{
+legend:{
+position:"top"
+}
+}
+
 }
 
 });
+
 }
