@@ -24,6 +24,10 @@ let marketCapital = 0;
 
 let bankRate = bank / 100 / 12;
 let marketRate = market / 100 / 12;
+  
+let ahorroData = [];
+let bankData = [];
+let marketData = [];
 
 for(let i=0; i<months; i++){
 
@@ -33,6 +37,10 @@ bankCapital = bankCapital + Number(aporte);
 marketCapital = marketCapital * (1 + marketRate);
 marketCapital = marketCapital + Number(aporte);
 
+ahorroData.push(aporte * (i+1));
+bankData.push(bankCapital);
+marketData.push(marketCapital);
+
 }
 
 document.getElementById("results").innerHTML =
@@ -41,5 +49,36 @@ Ahorro sin interés: ${formatoCLP(ahorro)} <br><br>
 Banco: ${formatoCLP(bankCapital)} <br><br>
 Mercado: ${formatoCLP(marketCapital)}
 `;
+let ctx = document.getElementById("grafico").getContext("2d");
 
+new Chart(ctx, {
+
+type: "line",
+
+data: {
+
+labels: ahorroData.map((_,i)=>i+1),
+
+datasets: [
+
+{
+label: "Ahorro sin interés",
+data: ahorroData
+},
+
+{
+label: "Banco",
+data: bankData
+},
+
+{
+label: "Mercado",
+data: marketData
+}
+
+]
+
+}
+
+});
 }
