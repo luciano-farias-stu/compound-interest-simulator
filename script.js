@@ -1,3 +1,4 @@
+console.log("SCRIPT CARGADO");
 function formatearInputCLP(input){
 
 let valor = input.value.replace(/\./g,"").replace(/\D/g,"");
