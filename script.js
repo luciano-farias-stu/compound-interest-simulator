@@ -37,9 +37,9 @@ marketCapital = marketCapital + Number(aporte);
 
 document.getElementById("results").innerHTML =
 `
-Ahorro sin interés: $${Math.round(ahorro)} <br><br>
-Banco: $${Math.round(bankCapital)} <br><br>
-Mercado: $${Math.round(marketCapital)}
+Ahorro sin interés: ${formatoCLP(ahorro)} <br><br>
+Banco: ${formatoCLP(bankCapital)} <br><br>
+Mercado: ${formatoCLP(marketCapital)}
 `;
 
 }
