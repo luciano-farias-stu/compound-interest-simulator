@@ -236,5 +236,3 @@ return formatoCLP(value);
 
 }
 });
-
-}
