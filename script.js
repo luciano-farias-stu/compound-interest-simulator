@@ -174,6 +174,11 @@ options: {
 
 responsive: true,
 
+animation:{
+duration:2000,
+easing:"easeOutQuart"
+},
+
 interaction:{
 mode: "index",
 intersect: false
@@ -221,11 +226,7 @@ text: "Capital acumulado"
 ticks:{
 callback: function(value){
 return formatoCLP(value);
-  
-animation:{
-duration:2000,
-easing:"easeOutQuart"
-},
+}
 }
 }
 
