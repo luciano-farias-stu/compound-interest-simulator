@@ -51,11 +51,7 @@ document.getElementById("bancoCard").innerHTML =
 
 document.getElementById("mercadoCard").innerHTML =
 `<h3>Mercado</h3>${formatoCLP(marketCapital)}`;
-`
-Ahorro sin interés: ${formatoCLP(ahorro)} <br><br>
-Banco: ${formatoCLP(bankCapital)} <br><br>
-Mercado: ${formatoCLP(marketCapital)}
-`;
+
 let ctx = document.getElementById("grafico").getContext("2d");
 
 new Chart(ctx, {
