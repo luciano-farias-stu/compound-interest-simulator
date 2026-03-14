@@ -73,6 +73,9 @@ mercadoCard.innerHTML =
   
 let ctx = document.getElementById("grafico").getContext("2d");
 
+if(window.miGrafico){
+window.miGrafico.destroy();
+}
 window.miGrafico = new Chart(ctx, {
 
 type: "line",
