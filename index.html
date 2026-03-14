@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
 
-    <title>Simulador de Crecimiento de Ahorro</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+<title>Simulador de Inversión</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -13,50 +20,45 @@
 
 <div class="container">
 
+<header>
 <h1>Simulador de Crecimiento de Inversión</h1>
+<p>Compara cómo crece tu dinero en distintos escenarios de inversión.</p>
+</header>
 
-<p>
-Compara el impacto del interés compuesto entre ahorro tradicional,
-fondos bancarios e inversión en mercado accionario.
-</p>
-
-<ul>
-<li>Guardar dinero sin interés</li>
-<li>Fondo de ahorro bancario</li>
-<li>Inversión en mercado accionario</li>
-</ul>
+<section class="panel">
 
 <h2>Parámetros</h2>
 
 <div class="inputs">
 
-<div>
+<div class="input-group">
 <label>Aporte mensual (CLP)</label>
 <input type="text" id="monthly" oninput="formatearInputCLP(this)">
 </div>
 
-<div>
+<div class="input-group">
 <label>Años de inversión</label>
 <input type="number" id="years">
 </div>
 
-<div>
+<div class="input-group">
 <label>Tasa banco (%)</label>
 <input type="number" id="bank">
 </div>
 
-<div>
+<div class="input-group">
 <label>Tasa mercado (%)</label>
 <input type="number" id="market" value="10">
-
-<p class="nota">
-Basado en el rendimiento histórico anual promedio del S&P 500 (~10%).
-</p>
 </div>
 
 </div>
 
-<button onclick="simular()">Simular</button>
+<button onclick="simular()">Simular inversión</button>
+
+</section>
+
+<section>
+
 <h2>Resultados</h2>
 
 <div class="resultados">
@@ -69,19 +71,26 @@ Ahorro simple
 Banco
 </div>
 
-<div class="card" id="mercadoCard">
+<div class="card destaque" id="mercadoCard">
 Mercado
 </div>
 
 </div>
-    
+
+</section>
+
+<section>
+
 <h2>Evolución del capital</h2>
 
-<canvas id="grafico" width="600" height="300"></canvas>
+<div class="grafico-box">
+<canvas id="grafico"></canvas>
+</div>
+
+</section>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="script.js"></script>
 
 </body>
