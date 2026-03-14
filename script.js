@@ -158,7 +158,6 @@ target: 4,
 above: "rgba(34,197,94,0.15)"
 }
 },
-
 {
 label: "Mercado escenario bajo",
 data: marketLower,
@@ -226,7 +225,7 @@ return formatoCLP(value);
 animation:{
 duration:2000,
 easing:"easeOutQuart"
-}
+},
 }
 }
 
