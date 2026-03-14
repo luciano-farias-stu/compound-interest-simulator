@@ -1,13 +1,62 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Compound Interest Simulator</title>
+
+    <title>Simulador de Crecimiento de Ahorro</title>
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
 <h1>Simulador de Crecimiento de Ahorro</h1>
-<p>Proyecto en desarrollo.</p>
+
+<p>
+Este simulador compara tres estrategias de ahorro:
+</p>
+
+<ul>
+<li>Guardar dinero sin interés</li>
+<li>Fondo de ahorro bancario</li>
+<li>Inversión en mercado accionario</li>
+</ul>
+
+<h2>Parámetros de simulación</h2>
+
+<label>Aporte mensual:</label>
+<input type="number" id="monthly">
+
+<br><br>
+
+<label>Años de inversión:</label>
+<input type="number" id="years">
+
+<br><br>
+
+<label>Tasa banco (%):</label>
+<input type="number" id="bank">
+
+<br><br>
+
+<label>Tasa mercado (%):</label>
+<input type="number" id="market">
+
+<br><br>
+
+<button onclick="simular()">Simular</button>
+
+<h2>Resultados</h2>
+
+<div id="results">
+
+Aquí aparecerán los resultados.
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
+
 </html>
