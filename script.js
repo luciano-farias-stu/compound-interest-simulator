@@ -43,7 +43,14 @@ marketData.push(marketCapital);
 
 }
 
-document.getElementById("results").innerHTML =
+document.getElementById("ahorroCard").innerHTML =
+`<h3>Ahorro</h3>${formatoCLP(ahorro)}`;
+
+document.getElementById("bancoCard").innerHTML =
+`<h3>Banco</h3>${formatoCLP(bankCapital)}`;
+
+document.getElementById("mercadoCard").innerHTML =
+`<h3>Mercado</h3>${formatoCLP(marketCapital)}`;
 `
 Ahorro sin interés: ${formatoCLP(ahorro)} <br><br>
 Banco: ${formatoCLP(bankCapital)} <br><br>
