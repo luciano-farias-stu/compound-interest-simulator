@@ -10,10 +10,10 @@ minimumFractionDigits: 0
 
 function simular(){
 
-let aporte = document.getElementById("monthly").value;
-let years = document.getElementById("years").value;
-let bank = document.getElementById("bank").value;
-let market = document.getElementById("market").value;
+let aporte = Number(document.getElementById("monthly").value);
+let years = Number(document.getElementById("years").value);
+let bank = Number(document.getElementById("bank").value);
+let market = Number(document.getElementById("market").value);
 
 let months = years * 12;
 
