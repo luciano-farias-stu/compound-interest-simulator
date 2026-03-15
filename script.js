@@ -79,28 +79,61 @@ if(window.miGrafico){
 window.miGrafico.destroy();
 }
 
+/* degradados */
+
+let gradMercado = ctx.createLinearGradient(0,0,0,300);
+gradMercado.addColorStop(0,"rgba(34,197,94,0.35)");
+gradMercado.addColorStop(1,"rgba(34,197,94,0)");
+
+let gradBanco = ctx.createLinearGradient(0,0,0,300);
+gradBanco.addColorStop(0,"rgba(59,130,246,0.35)");
+gradBanco.addColorStop(1,"rgba(59,130,246,0)");
+
+let gradAhorro = ctx.createLinearGradient(0,0,0,300);
+gradAhorro.addColorStop(0,"rgba(239,68,68,0.25)");
+gradAhorro.addColorStop(1,"rgba(239,68,68,0)");
+
 window.miGrafico = new Chart(ctx,{
 
 type:"line",
 
 data:{
+
 labels: ahorroData.map((_,i)=>i+1),
 
 datasets:[
 
 {
 label:"Ahorro",
-data: ahorroData
+data: ahorroData,
+borderColor:"#ef4444",
+backgroundColor: gradAhorro,
+fill:true,
+borderWidth:2,
+tension:0.4,
+pointRadius:0
 },
 
 {
 label:"Banco",
-data: bankData
+data: bankData,
+borderColor:"#3b82f6",
+backgroundColor: gradBanco,
+fill:true,
+borderWidth:2,
+tension:0.4,
+pointRadius:0
 },
 
 {
 label:"Mercado",
-data: marketData
+data: marketData,
+borderColor:"#22c55e",
+backgroundColor: gradMercado,
+fill:true,
+borderWidth:3,
+tension:0.4,
+pointRadius:0
 }
 
 ]
@@ -108,9 +141,56 @@ data: marketData
 },
 
 options:{
-responsive:true
+
+responsive:true,
+
+animation:{
+duration:1800,
+easing:"easeOutQuart"
+},
+
+interaction:{
+mode:"index",
+intersect:false
+},
+
+plugins:{
+
+tooltip:{
+backgroundColor:"#0f172a",
+titleColor:"#fff",
+bodyColor:"#fff",
+padding:12,
+callbacks:{
+label:function(context){
+return context.dataset.label + ": " + formatoCLP(context.raw);
+}
+}
+}
+
+},
+
+scales:{
+
+x:{
+grid:{
+display:false
+}
+},
+
+y:{
+ticks:{
+callback:function(value){
+return formatoCLP(value);
+}
+}
+}
+
+}
+
 }
 
 });
+
 
 }
