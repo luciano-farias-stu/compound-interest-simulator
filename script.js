@@ -21,6 +21,28 @@ minimumFractionDigits: 0
 
 }
 
+/* CONTADOR ANIMADO */
+
+function animarValor(elemento, valorFinal, duracion=1200){
+
+let inicio = 0;
+let incremento = valorFinal / (duracion / 16);
+
+let contador = setInterval(function(){
+
+inicio += incremento;
+
+if(inicio >= valorFinal){
+inicio = valorFinal;
+clearInterval(contador);
+}
+
+elemento.textContent = formatoCLP(Math.floor(inicio));
+
+},16);
+
+}
+
 function simular(){
 
 let aporte = Number(
@@ -39,18 +61,36 @@ let marketCapital = 0;
 let bankRate = bank / 100 / 12;
 let marketRate = market / 100 / 12;
 
+/* VOLATILIDAD MERCADO */
+
+let volatilidad = 0.02;
+
+let marketUpperRate = (market/100 + volatilidad) / 12;
+let marketLowerRate = (market/100 - volatilidad) / 12;
+
+let marketUpperCapital = 0;
+let marketLowerCapital = 0;
+
 let ahorroData = [];
 let bankData = [];
 let marketData = [];
+let marketUpper = [];
+let marketLower = [];
 
 for(let i=0;i<months;i++){
 
 bankCapital = bankCapital * (1 + bankRate) + aporte;
 marketCapital = marketCapital * (1 + marketRate) + aporte;
 
+marketUpperCapital = marketUpperCapital * (1 + marketUpperRate) + aporte;
+marketLowerCapital = marketLowerCapital * (1 + marketLowerRate) + aporte;
+
 ahorroData.push(aporte * (i+1));
 bankData.push(bankCapital);
 marketData.push(marketCapital);
+
+marketUpper.push(marketUpperCapital);
+marketLower.push(marketLowerCapital);
 
 }
 
@@ -59,19 +99,27 @@ let aporteTotal = aporte * months;
 let gananciaBanco = bankCapital - aporteTotal;
 let gananciaMercado = marketCapital - aporteTotal;
 
+/* TARJETAS CON CONTADOR */
+
 document.getElementById("ahorroCard").innerHTML =
 `<h3>💰 Ahorro simple</h3>
-<p>Total: <strong>${formatoCLP(aporteTotal)}</strong></p>`;
+<p>Total: <strong id="ahorroTotal">0</strong></p>`;
 
 document.getElementById("bancoCard").innerHTML =
 `<h3>🏦 Banco</h3>
-<p>Total: <strong>${formatoCLP(bankCapital)}</strong></p>
+<p>Total: <strong id="bancoTotal">0</strong></p>
 <p>Interés ganado: ${formatoCLP(gananciaBanco)}</p>`;
 
 document.getElementById("mercadoCard").innerHTML =
 `<h3>📈 Mercado</h3>
-<p>Total: <strong>${formatoCLP(marketCapital)}</strong></p>
+<p>Total: <strong id="mercadoTotal">0</strong></p>
 <p>Interés ganado: ${formatoCLP(gananciaMercado)}</p>`;
+
+/* ANIMAR VALORES */
+
+animarValor(document.getElementById("ahorroTotal"), aporteTotal);
+animarValor(document.getElementById("bancoTotal"), bankCapital);
+animarValor(document.getElementById("mercadoTotal"), marketCapital);
 
 let ctx = document.getElementById("grafico").getContext("2d");
 
@@ -134,6 +182,26 @@ fill:true,
 borderWidth:3,
 tension:0.4,
 pointRadius:0
+},
+
+{
+label:"Mercado escenario alto",
+data: marketUpper,
+borderColor:"#22c55e66",
+borderWidth:2,
+borderDash:[6,6],
+tension:0.4,
+pointRadius:0
+},
+
+{
+label:"Mercado escenario bajo",
+data: marketLower,
+borderColor:"#22c55e55",
+borderWidth:2,
+borderDash:[6,6],
+tension:0.4,
+pointRadius:0
 }
 
 ]
@@ -175,6 +243,9 @@ scales:{
 x:{
 grid:{
 display:false
+},
+ticks:{
+maxTicksLimit:10
 }
 },
 
