@@ -13,11 +13,33 @@ input.value = Number(valor).toLocaleString("es-CL");
 
 function formatoCLP(valor){
 
-return new Intl.NumberFormat("es-CL", {
-style: "currency",
-currency: "CLP",
+return new Intl.NumberFormat('es-CL', {
+style: 'currency',
+currency: 'CLP',
 minimumFractionDigits: 0
 }).format(valor);
+
+}
+
+/* CONTADOR ANIMADO */
+
+function animarValor(elemento, valorFinal, duracion=1200){
+
+let inicio = 0;
+let incremento = valorFinal / (duracion / 16);
+
+let contador = setInterval(function(){
+
+inicio += incremento;
+
+if(inicio >= valorFinal){
+inicio = valorFinal;
+clearInterval(contador);
+}
+
+elemento.textContent = formatoCLP(Math.floor(inicio));
+
+},16);
 
 }
 
@@ -39,6 +61,8 @@ let marketCapital = 0;
 let bankRate = bank / 100 / 12;
 let marketRate = market / 100 / 12;
 
+/* VOLATILIDAD MERCADO */
+
 let volatilidad = 0.02;
 
 let marketUpperRate = (market/100 + volatilidad) / 12;
@@ -53,7 +77,7 @@ let marketData = [];
 let marketUpper = [];
 let marketLower = [];
 
-for(let i = 0; i < months; i++){
+for(let i=0;i<months;i++){
 
 bankCapital = bankCapital * (1 + bankRate) + aporte;
 marketCapital = marketCapital * (1 + marketRate) + aporte;
@@ -61,7 +85,7 @@ marketCapital = marketCapital * (1 + marketRate) + aporte;
 marketUpperCapital = marketUpperCapital * (1 + marketUpperRate) + aporte;
 marketLowerCapital = marketLowerCapital * (1 + marketLowerRate) + aporte;
 
-ahorroData.push(aporte * (i + 1));
+ahorroData.push(aporte * (i+1));
 bankData.push(bankCapital);
 marketData.push(marketCapital);
 
@@ -75,23 +99,27 @@ let aporteTotal = aporte * months;
 let gananciaBanco = bankCapital - aporteTotal;
 let gananciaMercado = marketCapital - aporteTotal;
 
-let ahorroCard = document.getElementById("ahorroCard");
-let bancoCard = document.getElementById("bancoCard");
-let mercadoCard = document.getElementById("mercadoCard");
+/* TARJETAS CON CONTADOR */
 
-ahorroCard.innerHTML =
-`<h3>Ahorro simple</h3>
-<p>Total: ${formatoCLP(aporteTotal)}</p>`;
+document.getElementById("ahorroCard").innerHTML =
+`<h3>💰 Ahorro simple</h3>
+<p>Total: <strong id="ahorroTotal">0</strong></p>`;
 
-bancoCard.innerHTML =
-`<h3>Banco</h3>
-<p>Total: ${formatoCLP(bankCapital)}</p>
+document.getElementById("bancoCard").innerHTML =
+`<h3>🏦 Banco</h3>
+<p>Total: <strong id="bancoTotal">0</strong></p>
 <p>Interés ganado: ${formatoCLP(gananciaBanco)}</p>`;
 
-mercadoCard.innerHTML =
-`<h3>Mercado</h3>
-<p>Total: ${formatoCLP(marketCapital)}</p>
+document.getElementById("mercadoCard").innerHTML =
+`<h3>📈 Mercado</h3>
+<p>Total: <strong id="mercadoTotal">0</strong></p>
 <p>Interés ganado: ${formatoCLP(gananciaMercado)}</p>`;
+
+/* ANIMAR VALORES */
+
+animarValor(document.getElementById("ahorroTotal"), aporteTotal);
+animarValor(document.getElementById("bancoTotal"), bankCapital);
+animarValor(document.getElementById("mercadoTotal"), marketCapital);
 
 let ctx = document.getElementById("grafico").getContext("2d");
 
@@ -99,91 +127,144 @@ if(window.miGrafico){
 window.miGrafico.destroy();
 }
 
-window.miGrafico = new Chart(ctx, {
+/* degradados */
 
-type: "line",
+let gradMercado = ctx.createLinearGradient(0,0,0,300);
+gradMercado.addColorStop(0,"rgba(34,197,94,0.35)");
+gradMercado.addColorStop(1,"rgba(34,197,94,0)");
 
-data: {
+let gradBanco = ctx.createLinearGradient(0,0,0,300);
+gradBanco.addColorStop(0,"rgba(59,130,246,0.35)");
+gradBanco.addColorStop(1,"rgba(59,130,246,0)");
+
+let gradAhorro = ctx.createLinearGradient(0,0,0,300);
+gradAhorro.addColorStop(0,"rgba(239,68,68,0.25)");
+gradAhorro.addColorStop(1,"rgba(239,68,68,0)");
+
+window.miGrafico = new Chart(ctx,{
+
+type:"line",
+
+data:{
 
 labels: ahorroData.map((_,i)=>i+1),
 
-datasets: [
+datasets:[
 
 {
-label: "Ahorro sin interés",
+label:"Ahorro",
 data: ahorroData,
-borderColor: "#ef4444",
-borderWidth: 3,
-tension: 0.3
+borderColor:"#ef4444",
+backgroundColor: gradAhorro,
+fill:true,
+borderWidth:2,
+tension:0.4,
+pointRadius:0
 },
 
 {
-label: "Banco",
+label:"Banco",
 data: bankData,
-borderColor: "#3b82f6",
-borderWidth: 3,
-tension: 0.3
+borderColor:"#3b82f6",
+backgroundColor: gradBanco,
+fill:true,
+borderWidth:2,
+tension:0.4,
+pointRadius:0
 },
 
 {
-label: "Mercado",
+label:"Mercado",
 data: marketData,
-borderColor: "#22c55e",
-borderWidth: 3,
-tension: 0.3
+borderColor:"#22c55e",
+backgroundColor: gradMercado,
+fill:true,
+borderWidth:3,
+tension:0.4,
+pointRadius:0
 },
 
 {
-label: "Mercado escenario alto",
+label:"Mercado escenario alto",
 data: marketUpper,
-borderColor: "#22c55e66",
-borderDash: [6,6],
-borderWidth: 2,
-tension: 0.3
+borderColor:"#22c55e66",
+borderWidth:2,
+borderDash:[6,6],
+tension:0.4,
+pointRadius:0
 },
 
 {
-label: "Mercado escenario bajo",
+label:"Mercado escenario bajo",
 data: marketLower,
-borderColor: "#22c55e55",
-borderWidth: 1,
-tension: 0.3
+borderColor:"#22c55e55",
+borderWidth:2,
+borderDash:[6,6],
+tension:0.4,
+pointRadius:0
 }
 
 ]
 
 },
 
-options: {
+options:{
 
-responsive: true,
+responsive:true,
 
-plugins:{
-legend:{
-position:"top"
-}
+animation:{
+duration:1800,
+easing:"easeOutQuart"
 },
 
-scales: {
+interaction:{
+mode:"index",
+intersect:false
+},
+
+plugins:{
+
+tooltip:{
+backgroundColor:"#0f172a",
+titleColor:"#fff",
+bodyColor:"#fff",
+padding:12,
+callbacks:{
+label:function(context){
+return context.dataset.label + ": " + formatoCLP(context.raw);
+}
+}
+}
+
+},
+
+scales:{
 
 x:{
-title:{
-display:true,
-text:"Meses de inversión"
+grid:{
+display:false
+},
+ticks:{
+maxTicksLimit:10
 }
 },
 
 y:{
-title:{
-display:true,
-text:"Capital acumulado (CLP)"
+ticks:{
+callback:function(value){
+return formatoCLP(value);
 }
+}
+}
+
 }
 
 }
 
-}
+});
 
+document.getElementById("grafico").scrollIntoView({
+behavior:"smooth"
 });
 
 }
