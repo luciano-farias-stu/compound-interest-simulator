@@ -192,5 +192,8 @@ return formatoCLP(value);
 
 });
 
+document.getElementById("grafico").scrollIntoView({
+behavior:"smooth"
+});
 
 }
